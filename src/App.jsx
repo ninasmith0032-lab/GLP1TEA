@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import products from "./products";
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 
-function App() {
+function Store() {
   const [loading, setLoading] = useState(false);
 
   const handleCheckout = async (product) => {
@@ -26,7 +29,10 @@ function App() {
       <h1>🌱 GLP-1 Tea Store</h1>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
         {products.map((p, i) => (
-          <div key={i} style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "8px" }}>
+          <div
+            key={i}
+            style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "8px" }}
+          >
             <img src={p.image} alt={p.name} style={{ width: "100%", borderRadius: "8px" }} />
             <h2>{p.name}</h2>
             <p>${(p.price / 100).toFixed(2)}</p>
@@ -37,6 +43,23 @@ function App() {
         ))}
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <nav style={{ padding: "10px", background: "#eee" }}>
+        <Link to="/" style={{ marginRight: "10px" }}>Store</Link>
+        <Link to="/success" style={{ marginRight: "10px" }}>Success</Link>
+        <Link to="/cancel">Cancel</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Store />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/cancel" element={<Cancel />} />
+      </Routes>
+    </Router>
   );
 }
 
